@@ -16,6 +16,7 @@ public class CommandResult {
     /** The list of drugs that was produced by the command */
     private final List<Drug> relevantDrugs;
 
+
     public CommandResult(String feedbackToUser) {
         this.feedbackToUser = feedbackToUser;
         relevantDrugs = null;
@@ -33,6 +34,18 @@ public class CommandResult {
         return Optional.ofNullable(relevantDrugs);
     }
 
-
-
+    public String getFeedbackToUserFindTest() {
+        if (relevantDrugs != null) {
+            StringBuilder feedback = new StringBuilder();
+            for (int i = 0; i < relevantDrugs.size(); i++) {
+                feedback.append(i+1).append(". ").append(relevantDrugs);
+                feedback.append(System.lineSeparator());
+            }
+            feedback.append(System.lineSeparator());
+            feedback.append(feedbackToUser);
+            return feedback.toString();
+        } else {
+            return feedbackToUser;
+        }
+    }
 }
