@@ -4,15 +4,17 @@ import seedu.stocker.drugs.Drug;
 
 import java.util.ArrayList;
 import java.util.List;
-/*import java.util.logging.Level;
-import java.util.logging.Logger;*/
 
 import static seedu.stocker.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+
 
 /**
  * Represents a command to find drugs in the inventory that match a given keyword.
  */
 public class FindCommand extends Command {
+
+
     public static final String COMMAND_WORD = "find";
 
     /**
@@ -58,7 +60,6 @@ public class FindCommand extends Command {
 
             }
         }
-
         return new CommandResult(MESSAGE_SUCCESS, foundDrugs);
     }
 }

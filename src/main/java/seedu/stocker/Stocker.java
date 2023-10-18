@@ -16,6 +16,8 @@ public class Stocker {
     private Ui ui;
     private Inventory inventory;
 
+
+
     public static void main(String[] launchArgs) throws IOException {
         new Stocker().run();
     }
@@ -29,11 +31,7 @@ public class Stocker {
         LoginSystem system = new LoginSystem();
         system.run();
 
-        if (system.loginStatus == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return system.loginStatus;
     }
 
 
@@ -53,10 +51,8 @@ public class Stocker {
         this.ui = new Ui();
         this.inventory = new Inventory();
         boolean checker = startLogin();
-        assert checker == true;
-        if(checker){
-            ui.showWelcomeMessage();
-        }
+        assert checker;
+        ui.showWelcomeMessage();
     }
 
     /**
@@ -78,6 +74,8 @@ public class Stocker {
             CommandResult result = executeCommand(command);
             ui.showResultToUser(result);
 
+            assert !ExitCommand.isExit(command);
+
         } while (!ExitCommand.isExit(command));
     }
 
@@ -90,7 +88,6 @@ public class Stocker {
      */
     private CommandResult executeCommand(Command command) {
         command.setData(inventory);
-        CommandResult result = command.execute();
-        return result;
+        return command.execute();
     }
 }

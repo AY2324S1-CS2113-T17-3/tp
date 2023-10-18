@@ -106,9 +106,8 @@ public class Ui {
      */
     public String getUserCommand() {
         out.print(LINE_PREFIX + "Enter command: ");
-        String fullUserInput = in.nextLine();
 
-        return fullUserInput;
+        return in.nextLine();
     }
 
     /**
@@ -178,9 +177,7 @@ public class Ui {
      */
     public void showResultToUser(CommandResult result) {
         final Optional<List<Drug>> resultDrugs = result.getRelevantDrugs();
-        if (resultDrugs.isPresent()) {
-            showDrugListView(resultDrugs.get());
-        }
+        resultDrugs.ifPresent(this::showDrugListView);
         showToUser(result.feedbackToUser, DIVIDER);
     }
 

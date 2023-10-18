@@ -30,6 +30,8 @@ public class Parser {
         final String commandWord = words[0];
         final String arguments = userInput.replaceFirst(commandWord, "").trim();
 
+
+
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
