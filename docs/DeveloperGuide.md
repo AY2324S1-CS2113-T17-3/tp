@@ -185,6 +185,34 @@ Architecture Diagram of find command function:
 
 <img src="UML Diagrams/FindCommandArchitectureDiagram.png" width="500">
 
+## 2. Delete Function
+The "Delete" function is designed to enable users to remove specific drugs from the inventory based on the drug's name. This component facilitates the management of the inventory by allowing users to remove drugs they no longer need, fully depleted or discontinued.
+**Design Considerations**
+The design of the "Delete" function takes into account the following considerations:
+1. **User-Specified Drug Name:** The function allows users to specify the drug name they want to delete from the inventory.
+2. **Data Integrity:** It ensures that the deletion operation maintains the integrity of the inventory data structure, updating it correctly.
+   **Implementation and Rationale**
+   The "Delete" function is implemented as follows:
+- **User-Defined Drug Name:** Users provide the name of the drug they wish to delete.
+- **Data Deletion Algorithm:** The function employs data deletion logic to remove the specified drug from the inventory. This involves identifying the drug based on the provided name and removing it from the list.
+- **Error Handling:** The function includes error handling to address scenarios where the specified drug is not found in the inventory. In such cases, an appropriate error message is generated.
+- **User Feedback:** Upon successful deletion, the function generates a success message confirming the removal of the drug.
+  The "Delete" function is an essential feature for managing the inventory, allowing users to keep it up to date and remove unwanted or outdated drugs.
+  **Function Methods**
+  The "Delete" function includes the following method to achieve its functionality:
+- `execute()` - This method is responsible for executing the "Delete" command, removing the drug with the specified name from the inventory. It returns a `CommandResult` containing the outcome of the command execution, which includes a success message upon successful deletion or an error message if the drug is not found in the inventory.
+  **Example Usage**
+  To illustrate how the "Delete" function works, consider the following example usage:
+1. **User Input:** The user initiates the "Delete" command by typing something like the following:
+   `delete /n panadol`- This command instructs the program to remove the drug named "paracetamol" from the inventory.
+2. **Method Execution:** The `execute()` method within the "DeleteCommand" class is called. It takes the provided drug name as input.
+3. **Search Process:** The method processes the deletion by searching for the drug with the specified name in the inventory.
+4. **Deletion Operation:** If the drug is found, it is removed from the inventory.
+5. **Success Message:** The `CommandResult` is prepared, containing a success message (e.g., "Drug removed from inventory: paracetamol").
+6. **User Feedback:** The result is displayed to the user, confirming the successful removal of the drug from the inventory.
+   The "Delete" function provides a straightforward way for users to manage the inventory by removing specific drugs as needed.
+
+
 ---
 
 ## Product scope
