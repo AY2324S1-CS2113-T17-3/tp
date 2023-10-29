@@ -33,6 +33,10 @@ Deletes a drug being tracked by the system.
 
 List all drug information that is being tracked by the system.
 
+### Feature-stocklevel
+
+List all drugs by quantity level in ascending order.
+
 ### Feature-find
 
 Finds drugs using their name or expiry date.
@@ -156,7 +160,58 @@ Expected outcome:
 || 1. Name: Panadol, Expiry Date: 12 June 2026/  Quantity: 300
 
 Listed all drugs in the inventory.
+
+
+
+
 ```
+
+### `list` - List all drug information that is being tracked by the system
+
+List all drug information that is being tracked by the system.
+
+Format:
+
+list
+
+
+Example of usage:
+
+`list
+`
+
+Expected outcome:
+
+```
+|| 1. Name: Panadol, Expiry Date: 12 June 2026/  Quantity: 300
+
+Listed all drugs in the inventory.
+```
+
+### `stocklevel` - List all drugs by quantity level in ascending order
+
+List all drugs by quantity level in ascending order.
+
+Format:
+
+stocklevel
+
+
+Example of usage:
+
+`stocklevel
+`
+
+Expected outcome:
+
+```
+ 1. Name: histamine, Expiry date: 101010, Quantity: 10
+ 2. Name: paracetamol, Expiry date: 101010, Quantity: 50
+ 3. Name: panadol, Expiry date: 101010, Quantity: 120
+ 
+ Stock Level Report (Sorted by Quantity)
+```
+
 ### `find` - Finds drugs using their name or expiry date
 
 1. Finds drugs whose **names** contain any of the given keywords.
@@ -344,13 +399,13 @@ Example of usage:
 Expected outcome:
 
 ```
-|| 1. Name : Moderna
-||
-||Listed all vendors in the list.
-```
+1. Name : Moderna
+Listed all vendors in the list.
+
+
 ## FAQ
 
-**Q**: Can i register with blank username and password
+**Q**: Can I register with blank username and password
 
 **A**: No. Ensure your entries are not blank.
 
