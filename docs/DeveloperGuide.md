@@ -85,18 +85,21 @@ critical role in bridging the user interface (UI) and the command execution comp
 
 #### Design considerations
 
-- **User Input Parsing:** The Parser must effectively break down user input into its constituent parts, such as the command
-keyword and any associated arguments.
+- **User Input Parsing:** The Parser must effectively break down user input into its constituent parts, such as the
+  command
+  keyword and any associated arguments.
 
-- **Command Recognition:** The Parser must recognize the specific command the user intends to execute. This involves matching
-the command keyword to a predefined set of commands.
+- **Command Recognition:** The Parser must recognize the specific command the user intends to execute. This involves
+  matching
+  the command keyword to a predefined set of commands.
 
-- **Arguments Extraction:** For commands that require additional information, the Parser should correctly extract and format
-arguments, ensuring they are ready for command execution.
+- **Arguments Extraction:** For commands that require additional information, the Parser should correctly extract and
+  format
+  arguments, ensuring they are ready for command execution.
 
-- **Error Handling:** In cases where the input does not match any recognized command or has formatting errors, the Parser
-should generate appropriate error messages.
-
+- **Error Handling:** In cases where the input does not match any recognized command or has formatting errors, the
+  Parser
+  should generate appropriate error messages.
 
 #### Implementation and rationale
 
@@ -104,19 +107,22 @@ The Parser class is designed to handle these considerations through a well-struc
 works:
 
 1. Splitting User Input: The Parser takes the full user input and splits it into two parts: the command word and the
-remaining arguments.
+   remaining arguments.
 
-2. Command Recognition: It matches the command word to a predefined set of commands. If a valid command is recognized, it
-proceeds to the next step.
+2. Command Recognition: It matches the command word to a predefined set of commands. If a valid command is recognized,
+   it
+   proceeds to the next step.
 
 3. Arguments Extraction: Depending on the specific command, the Parser may further parse and extract arguments. For
-instance, for the "AddCommand," it extracts drug-related details like name, expiry date, serial number, and quantity.
+   instance, for the "AddCommand," it extracts drug-related details like name, expiry date, serial number, and quantity.
 
-4. Command Creation: The Parser creates an instance of the appropriate Command class, passing along any required arguments.
-This encapsulates the user's request in an executable command object.
+4. Command Creation: The Parser creates an instance of the appropriate Command class, passing along any required
+   arguments.
+   This encapsulates the user's request in an executable command object.
 
-5. Error Handling: If the user input does not match any recognized command or has formatting errors, the Parser generates
-an "IncorrectCommand" with an error message, providing feedback to the user.
+5. Error Handling: If the user input does not match any recognized command or has formatting errors, the Parser
+   generates
+   an "IncorrectCommand" with an error message, providing feedback to the user.
 
 By structuring the parsing process this way, the application ensures that user input is correctly interpreted and
 translated into executable commands for the subsequent phases of the application.
@@ -128,7 +134,8 @@ The parser class uses the below method to achieve its functionality
 
 Given below is an example of how the login system class works.
 
-Suppose a user enters the command `add /n Paracetamol /d 2023-12-31 /s ABC123 /q 100`. The Parser first splits this input
+Suppose a user enters the command `add /n Paracetamol /d 2023-12-31 /s ABC123 /q 100`. The Parser first splits this
+input
 into the command word "add" and the arguments. It then recognizes the "add" command, extracts the drug details (name,
 expiry date, serial number, and quantity), and creates an instance of the "`AddCommand`" with these details. If the user
 enters an invalid command or incorrect formatting, the Parser provides feedback to guide the user, ensuring a seamless
@@ -139,6 +146,112 @@ management system.
 
 The following sequence diagram shows how the parser class works when the program is running.
 <img src="UML Diagrams/ParserDiagram.png" width="500">
+
+---
+
+### Command Class
+
+---
+The `Command` class serves as a foundational component of the stock management system, acting as a bridge between user
+requests and the core functionality of the application. This class is extended by various concrete command classes, each
+representing a specific action that a user can perform within the system.
+
+#### Key Components
+
+1. **Inventory**: This represents the collection of drugs and their quantities in stock.
+
+2. **SalesList**: It maintains records of sales transactions.
+
+3. **Cart**: The user's shopping cart, where they can add and remove items.
+
+4. **VendorsList**: This contains information about vendors and suppliers.
+
+#### Design and Purpose
+
+- **Data Access**: It provides access to essential data structures and components of the system, including the inventory
+  of
+  drugs, sales records, the user's shopping cart, and the list of vendors.
+- **Abstraction**: It acts as an abstract command template, defining a common interface for all concrete command classes
+  to
+  implement.
+- **Execution**: It enforces the execution of commands through its abstract execute method, which returns a result that
+  may be
+  specific to the particular command.
+- **Data Initialization**: The class enables the initialization of data dependencies through the setData method,
+  ensuring that
+  commands have access to the necessary data for their execution.
+
+#### Implementation and Rationale
+
+Prior to execution, the `setData` method is used to provide the required data dependencies to the command. The
+extensibility of the `Command` class allows the addition of new commands as the application evolves. Each new command
+class extends the Command class and implements its own execute method, providing flexibility for incorporating new
+features and functionalities.
+
+Given below is an example of how the Command class works.
+
+Suppose a user adds a new drug to the inventory, using the `AddDrugCommand`.
+
+First, the application sets the necessary data dependencies by invoking the `setData` method. It
+provides access to the inventory, sales records, the user's cart, and vendor information.
+The `AddDrugCommand` class implements the execute method. Within this method, the logic for adding a new drug
+to the inventory is defined. The command verifies the drug details, quantity, and other relevant data. It also ensures
+that the drug meets the required criteria.
+Upon successful execution, the `AddDrugCommand` class returns a result, which may be a confirmation message such
+as "New drug added to the inventory". In case of any issues during execution, an
+appropriate error message is returned.
+
+The following sequence diagram shows how the command class works when the program is running.
+
+
+---
+
+### CommandResult Class
+
+---
+
+The `CommandResult` class is a crucial part of the Stocker application, responsible for providing feedback and results
+to the user after executing various commands. It contains a feedback message to describe the outcome of the command
+execution, as well as an optional list of relevant elements produced by the command.
+
+**Design Considerations**
+The design of the `CommandResult` class considers the following aspects:
+
+1. **Feedback Message:** The class stores a feedback message to inform the user about the outcome of the executed
+   command.
+
+2. **Relevant Elements:** For commands that produce a list of relevant elements, the `CommandResult` can store this list
+   for display.
+
+**Implementation and Rationale**
+
+The `CommandResult` class is implemented with two constructors and methods to access relevant elements and construct
+feedback messages.
+
+- `CommandResult(String feedbackToUser)`: This constructor is used when there are no relevant elements to be included in
+  the result. It sets the feedback message.
+
+- `CommandResult(String feedbackToUser, List<T> relevantElements)`: This constructor is used when the command produces a
+  list of relevant elements (e.g., a list of drugs). It sets both the feedback message and the list of relevant
+  elements.
+
+- `getRelevantElements()`: This method returns an optional list of relevant elements. It can be used to check if
+  relevant elements are present.
+
+- `getFeedbackToUser()`: This method returns the feedback message as a string.
+
+- `getFeedbackToUserWithElements()`: This method constructs a feedback message that includes the relevant elements. It
+  formats the list of elements with serial numbers (if applicable) and includes the feedback message.
+
+**Example Usage**
+
+The `CommandResult` class is used throughout the Stocker application to provide feedback to the user after executing
+commands. For example, when a user issues a `list` command, the `CommandResult` includes a list of drugs produced by the
+command along with the success message. The feedback message is then displayed to the user.
+
+The following sequence diagram shows how the Command Result function works.
+
+<img src="UML Diagrams/CommandResultDiagram.png" width="350">
 
 ---
 
@@ -255,10 +368,6 @@ The following sequence diagram shows how the Find Command function works.
 
 <img src="UML Diagrams/FindCommandDiagram.png" width="350">
 
-Architecture Diagram of find command function:
-
-<img src="UML Diagrams/FindCommandArchitectureDiagram.png" width="500">
-
 ---
 
 ## 2. ListCommand
@@ -328,9 +437,33 @@ The following sequence diagram shows how the Find Command function works.
 
 ---
 
-## 3. Delete Command
+## 3. ShowStockLevel Command
 
-The "Delete" function is designed to enable users to remove specific drugs from the inventory based on the drug's name, 
+This command allows users to generate a report displaying the
+stock levels of drugs. This report is sorted in ascending order based on the quantity of each drug, providing a clear
+overview of the available inventory.
+
+### Design Considerations
+
+- **Stock Level Report**: The primary objective of this command is to create a stock level report, which shows the
+  quantity of
+  drugs available, allowing users to assess the stock levels efficiently.
+- **Sorting**: The report is designed to be sorted by quantity in ascending order to make it easier for users to
+  identify
+  drugs with lower quantities.
+
+### Implementation
+
+The `ShowStockLevelCommand` is implemented to create a report of drug stock levels sorted in ascending order by
+quantity.
+It retrieves and sorts the list of stock entries, returning the sorted list in a CommandResult if the inventory is not
+empty. If the inventory is empty, it returns a message indicating that.
+
+---
+
+## 4. Delete Command
+
+The "Delete" function is designed to enable users to remove specific drugs from the inventory based on the drug's name,
 to remove drugs they no longer need, fully depleted or discontinued.
 
 **Design Considerations**
@@ -343,14 +476,14 @@ to remove drugs they no longer need, fully depleted or discontinued.
 
 **Implementation and Rationale**
 
-This method is executed when the delete command is invoked. First, it attempts to delete a drug from the inventory 
+This method is executed when the delete command is invoked. First, it attempts to delete a drug from the inventory
 using the inventory.deleteDrug(this.keyToDelete) method. If successful, it retrieves the deleted entry.
-If the drug is successfully deleted, it returns a success message. 
+If the drug is successfully deleted, it returns a success message.
 If the drug is not found (i.e., a DrugNotFoundException is thrown), it returns a failure message.
 
 ---
 
-## 4. Help Command
+## 5. Help Command
 
 The command is responsible for showing users a list of all possible commands.
 
@@ -364,7 +497,7 @@ Command will use java's system out to print out all required information with a 
 
 ---
 
-## 5. saveDrugs Command
+## 6. saveDrugs Command
 
 The save command was made as a means to backup user entered drug data into the hard drive of the computer to ensure
 previously entered data is saved and accessable whenever the app is launched.
@@ -386,7 +519,42 @@ the inventory drug list.
 
 ---
 
-## 6. addVendor Command
+## 7. SetThreshold Command
+
+This command allows users to specify a threshold
+quantity for a particular drug in the inventory, aiding in better management of stock levels.
+
+### Design Considerations
+
+This command enable users to set a specific threshold quantity for a drug.
+The threshold quantity serves as a reference point, indicating the minimum quantity of a drug that should trigger a
+restock or reorder.
+
+### Implementation
+
+The default threshold for all drugs is initially set at 100. If a user decides to modify this threshold for a specific
+drug, the new threshold will replace the default value for that particular drug.
+
+---
+
+## 8. ListThreshold Command
+
+This command enables users to retrieve a list
+of all drugs in the inventory, along with their associated threshold levels.
+
+### Design Considerations
+
+The storage capacity should be size adjustable based on the quantity of items, specifically drugs, and their
+corresponding threshold levels added to it.
+
+### Implementation
+
+In order to attain the adjustable storage based on number of items, an ArrayList was used as additional drugs can be
+appended to the ArrayList whenever a new entry is required.
+
+---
+
+## 9. addVendor Command
 
 The command was made to add vendors to a list of vendors so as to have access to it when needed.
 
@@ -396,12 +564,27 @@ The storage must be size adjustable based on the number of objects, in this case
 
 ### Implementation
 
-In order to attain the adjustable storage based on numebr of objects, an ArrayList was used as additional vendors can be
+In order to attain the adjustable storage based on number of objects, an ArrayList was used as additional vendors can be
 appended to the ArrayList whenever a new entry is required.
 
 ---
 
-## 7. listVendors Command
+## 10. deleteVendor Command
+
+It is designed to remove vendors from the list of vendors, ensuring that the system remains organized and up to date.
+
+### Design Considerations
+
+The storage must be size adjustable based on the number of objects, in this case vendors removed from it.
+
+### Implementation
+
+In order to attain the adjustable storage based on number of objects, an ArrayList was used as vendors can be
+removed from the ArrayList.
+
+---
+
+## 11. listVendors Command
 
 The command was made to list all vendors being tracked by the system in a neat way to the user
 
@@ -415,10 +598,10 @@ The list of vendors could be printed by using streams to efficiently collect and
 
 ---
 
-## 8. addVendorSupply Command
+## 12. addVendorSupply Command
 
-This method adds a drug to a vendor's supply list in the inventory management system, to track 
-what vendors supply what products. 
+This method adds a drug to a vendor's supply list in the inventory management system, to track
+what vendors supply what products.
 
 ### Design Considerations
 
@@ -426,44 +609,9 @@ This method checks if the specified vendor exists and, if so, adds the drug to t
 
 ### Implementation
 
-The execute method in the AddVendorSupplyCommand class checks if a specified vendor exists, adds a drug to their supply 
-list, and returns a success message. If the vendor is not found, it returns a message indicating that the vendor was 
+The execute method in the AddVendorSupplyCommand class checks if a specified vendor exists, adds a drug to their supply
+list, and returns a success message. If the vendor is not found, it returns a message indicating that the vendor was
 not found.
-
----
-
-## 9. CommandResult Class
-
-The `CommandResult` class is a crucial part of the Stocker application, responsible for providing feedback and results to the user after executing various commands. It contains a feedback message to describe the outcome of the command execution, as well as an optional list of relevant elements produced by the command.
-
-**Design Considerations**
-The design of the `CommandResult` class considers the following aspects:
-
-1. **Feedback Message:** The class stores a feedback message to inform the user about the outcome of the executed command.
-
-2. **Relevant Elements:** For commands that produce a list of relevant elements, the `CommandResult` can store this list for display.
-
-**Implementation and Rationale**
-
-The `CommandResult` class is implemented with two constructors and methods to access relevant elements and construct feedback messages.
-
-- `CommandResult(String feedbackToUser)`: This constructor is used when there are no relevant elements to be included in the result. It sets the feedback message.
-
-- `CommandResult(String feedbackToUser, List<T> relevantElements)`: This constructor is used when the command produces a list of relevant elements (e.g., a list of drugs). It sets both the feedback message and the list of relevant elements.
-
-- `getRelevantElements()`: This method returns an optional list of relevant elements. It can be used to check if relevant elements are present.
-
-- `getFeedbackToUser()`: This method returns the feedback message as a string.
-
-- `getFeedbackToUserWithElements()`: This method constructs a feedback message that includes the relevant elements. It formats the list of elements with serial numbers (if applicable) and includes the feedback message.
-
-**Example Usage**
-
-The `CommandResult` class is used throughout the Stocker application to provide feedback to the user after executing commands. For example, when a user issues a `list` command, the `CommandResult` includes a list of drugs produced by the command along with the success message. The feedback message is then displayed to the user.
-
-The following sequence diagram shows how the Command Result function works.
-
-<img src="UML Diagrams/CommandResultDiagram.png" width="350">
 
 ---
 

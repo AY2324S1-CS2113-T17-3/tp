@@ -40,19 +40,26 @@ GUI apps.
 -**Contributions to the UG**
 * Barbara added documentation for the following sections of
   the user guide:
-    * [FindCommand](https://ay2324s1-cs2113-t17-3.github.io/tp/UserGuide.html#find---finds-drugs-using-their-name-or-expiry-date)
-    * [ShowStockLevelCommand]()
-    * [SetThresholdCommand]()
-    * [ListThresholdCommand]()
-    * [DeleteVendorCommand]()
+    * [Find Command](https://ay2324s1-cs2113-t17-3.github.io/tp/UserGuide.html#find---finds-drugs-using-their-name-or-expiry-date)
+    * [ShowStockLevel Command](https://ay2324s1-cs2113-t17-3.github.io/tp/UserGuide.html#stockLevel---List-all-drugs-by-quantity-level-in-ascending-order)
+    * [SetThreshold Command](https://ay2324s1-cs2113-t17-3.github.io/tp/UserGuide.html#setthreshold---set-the-threshold-quantity-for-a-drug)
+    * [ListThreshold Command](https://ay2324s1-cs2113-t17-3.github.io/tp/UserGuide.html#listthreshold---list-all-drugs-and-their-threshold-levels)
+    * [DeleteVendor Command](https://ay2324s1-cs2113-t17-3.github.io/tp/UserGuide.html#deletevendor---deletes-a-vendor-into-list-of-vendors-being-tracked-by-system)
 
 
 -**Contributions to the DG**
 * Barbara added documentation for the following section of
   the developer guide:
-    *
+    * [Command Class]()
+    * [Parser Class]()
+    * [Find Command]()
+    * [ShowStockLevel Command]()
+    * [SetThreshold Command]()
+    * [ListThreshold Command]()
+    * [DeleteVendor Command]()
 * UML Diagrams
-    *
+    *[Sequence Diagram for Parser Class]()
+    *[Sequence Diagram for Find Command]()
 
 -**Contributions to team-based tasks**
 * Maintain issues and milestone tracker
